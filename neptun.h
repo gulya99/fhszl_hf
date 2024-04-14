@@ -1,1 +1,1 @@
-const str* my_neptun();
+const char* my_neptun();
