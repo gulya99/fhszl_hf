@@ -1,0 +1,38 @@
+name: Test, build and release
+on: [push]
+jobs:
+  static-test:
+    name: Static test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install splint
+        run: |
+          sudo apt install splint
+      - name: Testing
+        run: |
+          splint --compdef --exportlocal main.c
+  building-and-delivery:
+    name: Build and delivery
+    permissions:
+      contents: write
+    needs: [static-test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Building
+        run: |
+          gcc main.c -o main
+      - name: Create neptun.txt
+        run: |
+          echo EH9JTC > EH9JTC.txt
+      - name: Creating tar.gz
+        run: |
+          tar -czvf main.tar.gz main EH9JTC.txt
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          title: "Development build"
+          files: |
+            main.tar.gz
