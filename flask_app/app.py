@@ -15,7 +15,15 @@ class UploadFileForm(FlaskForm):
     ])
     submit = SubmitField("Upload")
 
-@app.route('/', methods=['GET',"POST"])
+@app.route('/health')
+def health():
+    return "OK"
+
+@app.route('/')
+def root():
+    return "Hello world!"
+
+@app.route('/home', methods=['GET',"POST"])
 def home():
     form = UploadFileForm()
     if form.validate_on_submit():
