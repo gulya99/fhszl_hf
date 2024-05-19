@@ -15,7 +15,7 @@ class UploadFileForm(FlaskForm):
     ])
     submit = SubmitField("Upload")
 
-@app.route('/health')
+@app.route("/health")
 def health():
     return "OK"
 
