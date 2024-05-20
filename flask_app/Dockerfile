@@ -1,5 +1,5 @@
 FROM python:3.6.15-slim-buster
-RUN pip3 install flask flask_wtf wtforms requests
+RUN pip3 install flask flask_wtf wtforms requests flask_uploads
 RUN useradd pythonuser -ms /bin/bash
 WORKDIR /home/pythonuser/app
 USER pythonuser
