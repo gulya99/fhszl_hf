@@ -23,7 +23,8 @@ def health():
 def home():
     form = UploadFileForm()
     if form.validate_on_submit():
-        filename = secure_filename(form.file.data.filename)
+        file = form.file.data
+        filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         image = {"image": file.filename}
         response = requests.post('http://0.0.0.0:6000/detect', files=files)
