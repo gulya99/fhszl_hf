@@ -28,6 +28,7 @@ def home():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         image = {"image": file.filename}
         response = requests.post('http://0.0.0.0:6000/detect', files=files)
+        return "File has been uploaded."
     return render_template('index.html', form=form)
 
 if __name__ == '__main__':

@@ -13,10 +13,14 @@ app.config['UPLOAD_FOLDER'] = 'web_app/static/files'
 def health():
     return "OK"
 
+@app.route('/', methods=["POST"])
+def home():
+    return render_template('index.html')
+
 @app.route('/detect', methods=["POST"])
 def detect():
     image = requests.files.get('image')
-    return image
+    return image.filename
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=6000, debug=True)
