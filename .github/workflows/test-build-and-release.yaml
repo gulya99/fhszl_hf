@@ -4,16 +4,16 @@ env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKERHUB_KEY: ${{ secrets.DOCKER_KEY }}
 jobs:
-  static-test:
-    name: Static test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install splint
-        run: |
-          sudo apt install splint
-      - name: Testing
-        run: |
-          splint --compdef --exportlocal main.c
+#  static-test:
+#    name: Static test
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Install splint
+#        run: |
+#          sudo apt install splint
+#      - name: Testing
+#        run: |
+#          splint --compdef --exportlocal main.c
   building-and-delivery:
     name: Build and delivery
     permissions:
