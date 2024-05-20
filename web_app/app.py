@@ -1,9 +1,14 @@
 from flask import Flask, render_template, request
 import os
+import cv2
 import time
 import requests
+import threading
 
 app = Flask(__name__)
+
+def detect():
+    car_cascade = cv2.CascadeClassifier('car_haarcascade.xml')
 
 @app.route("/health")
 def health():
@@ -17,9 +22,8 @@ def home():
 def upload():
     tag = request.form.get("tag")
     image = request.files.get("image")
-    render_template("upload.html")
-    time.sleep(10)
-    return "OK"
+    image.save(os.path.join("images", image.filename))
+    return render_template("image.html", title=tag, image=image.filename)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
