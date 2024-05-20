@@ -10,7 +10,7 @@ app.config["UPLOAD_FOLDER"] = os.path.join(os.path.dirname(os.path.realpath(__fi
 
 def detect(img_path):
     image = cv2.imread(img_path)
-    car_cascade = cv2.CascadeClassifier(os.path.join(os.path.dirname(os.path.realpath(__file__)), "car_haarcascade.xml"))
+    car_cascade = cv2.CascadeClassifier(os.path.join(os.path.dirname(os.path.realpath(__file__)), "haarcascade_car.xml"))
     cars = car_cascade.detectMultiScale(image)
     for (x, y, w, h) in cars:
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
