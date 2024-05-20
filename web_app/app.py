@@ -6,9 +6,10 @@ import requests
 import threading
 
 app = Flask(__name__)
+app.config["UPLOAD_FOLDER"] = join(dirname(realpath(__file__)), "images")
 
 def detect():
-    car_cascade = cv2.CascadeClassifier('car_haarcascade.xml')
+    car_cascade = cv2.CascadeClassifier("car_haarcascade.xml")
 
 @app.route("/health")
 def health():
@@ -22,7 +23,7 @@ def home():
 def upload():
     tag = request.form.get("tag")
     image = request.files.get("image")
-    image.save(os.path.join("images", image.filename))
+    image.save(os.path.join(app.config["UPLOAD_FOLDER"], image.filename))
     return render_template("image.html", title=tag, image=image.filename)
 
 if __name__ == '__main__':
