@@ -1,5 +1,5 @@
 FROM python:3.6.15-slim-buster
-run pip3 install --upgrade pip3
+RUN pip3 install --upgrade pip3
 RUN pip3 install flask requests opencv-python
 RUN useradd pythonuser -ms /bin/bash
 WORKDIR /home/pythonuser/app
