@@ -26,7 +26,7 @@ def home():
         file = form.file.data
         filename = secure_filename(file.filename)
         image = {"image": (filename, file)}
-        response = requests.post('http://0.0.0.0:6000/detect', files=image)
+        #response = requests.post('http://0.0.0.0:6000/detect', files=image)
         return "File has been uploaded."
     return render_template('index.html', form=form)
 
