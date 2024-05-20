@@ -27,7 +27,6 @@ def home():
 def upload():
     tag = request.form.get("tag")
     image = request.files.get("image")
-    open(os.path.join(app.config["UPLOAD_FOLDER"], image.filename)).close()
     image.save(os.path.join(app.config["UPLOAD_FOLDER"], image.filename))
     quantity = 0
     quantity = detect(image)
