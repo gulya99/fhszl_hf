@@ -1,6 +1,6 @@
 FROM python:3.6.15-slim-buster
 RUN /usr/local/bin/python -m pip install --upgrade pip
-RUN pip3 install flask requests opencv-python
+RUN pip3 install flask requests pyproject.toml-based opencv-python
 RUN useradd pythonuser -ms /bin/bash
 WORKDIR /home/pythonuser/app
 USER pythonuser
