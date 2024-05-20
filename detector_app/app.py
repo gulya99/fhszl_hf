@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileRequired
 from wtforms import FileField, SubmitField
@@ -6,8 +6,6 @@ import os
 import requests
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'supersecretkey'
-app.config['UPLOAD_FOLDER'] = 'web_app/static/files'
 
 @app.route("/health")
 def health():
@@ -15,12 +13,11 @@ def health():
 
 @app.route('/', methods=["POST"])
 def home():
-    return render_template('index.html')
+    return "Hello, World!"
 
 @app.route('/detect', methods=["POST"])
 def detect():
-    image = requests.files.get('image')
-    return image.filename
+    return "OK"
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=6000, debug=True)
