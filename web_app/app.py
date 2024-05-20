@@ -23,8 +23,8 @@ def home():
 def upload():
     tag = request.form.get("tag")
     image = request.files.get("image")
-    open(os.path.join(app.config["UPLOAD_FOLDER"], "parkolo.jpg")).close()
-#    image.save(os.path.join(app.config["UPLOAD_FOLDER"], image.filename))
+    open(os.path.join(app.config["UPLOAD_FOLDER"], image.filename)).close()
+    image.save(os.path.join(app.config["UPLOAD_FOLDER"], image.filename))
     return render_template("image.html", title=tag, image=image)
 
 if __name__ == '__main__':
