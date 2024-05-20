@@ -6,7 +6,7 @@ import requests
 import threading
 
 app = Flask(__name__)
-app.config["UPLOAD_FOLDER"] = os.path.join(os.path.dirname(os.path.realpath(__file__)), "images")
+app.config["UPLOAD_FOLDER"] = os.path.join(os.path.dirname(os.path.realpath(__file__)), "web_app/images")
 
 def detect():
     car_cascade = cv2.CascadeClassifier("car_haarcascade.xml")
