@@ -6,4 +6,5 @@ WORKDIR /home/pythonuser/app
 USER pythonuser
 COPY app.py app.py
 COPY templates templates/
+COPY images images/
 CMD python -u app.py
