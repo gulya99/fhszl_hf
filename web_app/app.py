@@ -22,8 +22,6 @@ def home():
 def upload():
     tag = request.form.get("tag")
     image = request.files.get("image")
-    if not os.path.exists("images"):
-            os.makedirs("images")
     image.save(os.path.join("images", image.filename))
     return render_template("image.html", title=tag, image=image.filename)
 
