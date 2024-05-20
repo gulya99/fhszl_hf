@@ -23,8 +23,8 @@ def home():
 def upload():
     tag = request.form.get("tag")
     image = request.files.get("image")
-    image.save(os.path.join(app.config["UPLOAD_FOLDER"], image.filename))
-    return render_template("image.html", title=tag, image=image.filename)
+#    image.save(os.path.join(app.config["UPLOAD_FOLDER"], image.filename))
+    return render_template("image.html", title=tag, image=image)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
