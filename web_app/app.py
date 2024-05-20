@@ -29,8 +29,8 @@ def upload():
     image = request.files.get("image")
     image.save(os.path.join(app.config["UPLOAD_FOLDER"], image.filename))
     quantity = 0
-    quantity = detect(image)
-    return render_template("image.html", title=tag, image=image, quantity=quantity)
+#    quantity = detect(image)
+    return render_template("image.html", title=tag, image=os.path.join(app.config["UPLOAD_FOLDER"], image.filename), quantity=quantity)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
