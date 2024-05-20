@@ -32,10 +32,6 @@ jobs:
         run: cd ./web_app && docker build -t gulya99/fhszl-hf:web-app-${{ github.sha }} .
       - name: Push Docker image
         run: docker push gulya99/fhszl-hf:web-app-${{ github.sha }}
-      - name: Build Docker image
-        run: cd ./detector_app && docker build -t gulya99/fhszl-hf:detector-app-${{ github.sha }} .
-      - name: Push Docker image
-        run: docker push gulya99/fhszl-hf:detector-app-${{ github.sha }}
       - name: Update values.yaml
         run: |
           cd helm

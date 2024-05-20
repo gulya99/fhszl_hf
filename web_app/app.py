@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import os
+import time
 import requests
 
 app = Flask(__name__)
@@ -16,11 +17,9 @@ def home():
 def upload():
     tag = request.form.get("tag")
     image = request.files.get("image")
-    
-    request_tag = {"tag": tag}
-    request_image = {"image": (image.filename, image.read())}
-    response = requests.post("http://0.0.0.0:6000/detect", data=request_tag, files=request_image)
-    return "OK?"
+    render_template("upload.html")
+    time.sleep(10)
+    return "OK"
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
