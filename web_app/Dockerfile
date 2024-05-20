@@ -1,5 +1,9 @@
 FROM python:3.6.15-slim-buster
-RUN pip3 install --upgrade pip3
+RUN apt-get update && apt-get install -y \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgl1-mesa-glx
 RUN pip3 install flask requests opencv-python
 RUN useradd pythonuser -ms /bin/bash
 WORKDIR /home/pythonuser/app
