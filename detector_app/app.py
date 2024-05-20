@@ -1,9 +1,4 @@
-from flask import Flask, render_template, request
-from flask_wtf import FlaskForm
-from flask_wtf.file import FileRequired
-from wtforms import FileField, SubmitField
-import os
-import requests
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -11,13 +6,16 @@ app = Flask(__name__)
 def health():
     return "OK"
 
-@app.route('/', methods=["POST"])
+@app.route('/')
 def home():
     return "Hello, World!"
 
 @app.route('/detect', methods=["POST"])
 def detect():
-    return "OK"
+    if request.method == "POST":
+        return "OK"
+    else:
+        return "Not OK"
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=6000, debug=True)
