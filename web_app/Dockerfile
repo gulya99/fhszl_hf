@@ -1,5 +1,6 @@
 FROM python:3.6.15-slim-buster
-RUN pip3 install flask requests opencv-python-headless
+RUN pip3 install flask requests
+run pip install opencv-python-headless
 RUN useradd pythonuser -ms /bin/bash
 WORKDIR /home/pythonuser/app
 USER pythonuser
