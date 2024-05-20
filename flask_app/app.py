@@ -1,12 +1,16 @@
 from flask import Flask, render_template
+from flask_uploads import UploadSet, IMAGES, configure_uploads
 from flask_wtf import FlaskForm
-from wtforms import FileField, SubmitField
 from flask_wtf.file import FileAllowed, FileRequired
+from wtforms import FileField, SubmitField
 import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'supersecretkey'
 app.config['UPLOAD_FOLDER'] = 'static/files'
+
+photos = UploadSet("photos", IMAGES)
+configure_uploads(app, photos)
 
 class UploadFileForm(FlaskForm):
     file = FileField("File", validators=[
