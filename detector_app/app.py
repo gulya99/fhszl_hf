@@ -13,7 +13,7 @@ app.config['UPLOAD_FOLDER'] = 'web_app/static/files'
 def health():
     return "OK"
 
-@app.route('/detect', methods="POST")
+@app.route('/detect', methods=["POST"])
 def detect():
     image = requests.files.get('image')
     return image
