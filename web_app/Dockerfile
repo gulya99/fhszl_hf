@@ -1,4 +1,4 @@
-FROM python:3.6.15-slim-buster
+FROM python:latest
 RUN /usr/local/bin/python -m pip install --upgrade pip
 RUN pip3 install flask requests pyproject-toml opencv-python
 RUN useradd pythonuser -ms /bin/bash
