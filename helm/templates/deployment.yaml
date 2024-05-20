@@ -12,8 +12,8 @@ spec:
         app: flask-app
     spec:
       containers:
-        - name: flask-app
-          image: gulya99/fhszl-hf:flask-app-{{ .Values.env.APP_VERSION }}
+        - name: web-app
+          image: gulya99/fhszl-hf:web-app-{{ .Values.env.APP_VERSION }}
           ports:
             - name: http
               containerPort: 5000
@@ -30,6 +30,29 @@ spec:
             httpGet:
                 path: /health
                 port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+        - name: detector-app
+          image: gulya99/fhszl-hf:detector-app-{{ .Values.env.APP_VERSION }}
+          ports:
+            - name: http
+              containerPort: 6000
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+                path: /health
+                port: 6000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+                path: /health
+                port: 6000
             initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5

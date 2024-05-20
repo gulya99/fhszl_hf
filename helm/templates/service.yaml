@@ -11,3 +11,17 @@ spec:
       name: http
   selector:
     app: flask-app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-app
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 6000
+      targetPort: 6000
+      protocol: TCP
+      name: http
+  selector:
+    app: flask-app
