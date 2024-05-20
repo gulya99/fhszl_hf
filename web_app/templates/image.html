@@ -8,9 +8,14 @@
 </head>
 <body>
     <h4>Original picture</h4>
+    <img src="{{ data:image/jpeg;base64,{{ image }} }}" alt="Original picture">
     <br>
     <br>
-    <img src="{{ image }}" alt="Original picture">
-    <p>{{quantity}}</p>
+    <br>
+    <h4>Detected picture</h4>
+    <img src="{{ data:image/jpeg;base64,{{ det_image }} }}" alt="Detected picture">
+    <p><b>{{ quantity }}</b></p>
+    <br>
+    <p>{{ tag }}</p>
 </body>
 </html>

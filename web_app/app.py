@@ -14,8 +14,9 @@ def detect(img_path):
     cars = car_cascade.detectMultiScale(image)
     for (x, y, w, h) in cars:
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-    cv2.imwrite(img_path.split(".")[0] + "_detected.jpg", image)
-    return len(cars)
+    det_path = img_path.split(".")[0] + "_detected.jpg", image
+    cv2.imwrite(det_path)
+    return len(cars), det_path
 
 @app.route("/health")
 def health():
@@ -32,8 +33,8 @@ def upload():
     img_path = os.path.join(app.config["UPLOAD_FOLDER"], image.filename)
     image.save(img_path)
     quantity = 0
-    quantity = detect(img_path)
-    return render_template("image.html", title=tag, image=img_path, quantity=quantity)
+    quantity, det_path = detect(img_path)
+    return render_template("image.html", title=tag, image=img_path, det_image=det_path, quantity=quantity)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
