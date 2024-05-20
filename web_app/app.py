@@ -20,7 +20,7 @@ def upload():
     request_tag = {"tag": tag}
     request_image = {"image": (image.filename, image.read())}
     response = requests.post("http://0.0.0.0:6000/detect", data=request_tag, files=request_image)
-    return response
+    return "OK?"
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
