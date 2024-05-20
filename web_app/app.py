@@ -15,7 +15,7 @@ def home():
 @app.route('/upload', methods=["GET","POST"])
 def upload():
     tag = request.form.get("tag")
-    image = request.form.get("image")
+    image = request.files.get("image")
     
     request_tag = {"tag": tag}
     request_image = {"image": (image.filename, image.read())}
