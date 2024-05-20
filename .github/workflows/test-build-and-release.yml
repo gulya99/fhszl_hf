@@ -1,5 +1,5 @@
 name: Test, build and release
-on: [push]
+on: 
 env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKERHUB_KEY: ${{ secrets.DOCKER_KEY }}
