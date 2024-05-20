@@ -8,11 +8,13 @@ import threading
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = os.path.join(os.path.dirname(os.path.realpath(__file__)), "images")
 
-def detect(image):
+def detect(img_path):
+    image = cv2.imread(img_path)
     car_cascade = cv2.CascadeClassifier(os.path.join(os.path.dirname(os.path.realpath(__file__)), "car_haarcascade.xml"))
     cars = car_cascade.detectMultiScale(image)
     for (x, y, w, h) in cars:
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+    cv2.imwrite(img_path.split(".")[0] + "_detected.jpg")
     return len(cars)
 
 @app.route("/health")
@@ -27,10 +29,11 @@ def home():
 def upload():
     tag = request.form.get("tag")
     image = request.files.get("image")
-    image.save(os.path.join(app.config["UPLOAD_FOLDER"], image.filename))
+    img_path = os.path.join(app.config["UPLOAD_FOLDER"], image.filename)
+    image.save(img_path)
     quantity = 0
-#    quantity = detect(image)
-    return render_template("image.html", title=tag, image=os.path.join(app.config["UPLOAD_FOLDER"], image.filename), quantity=quantity)
+    quantity = detect(img_path)
+    return render_template("image.html", title=tag, image=img_path, quantity=quantity)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
