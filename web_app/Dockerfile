@@ -6,5 +6,4 @@ WORKDIR /home/pythonuser/app
 USER pythonuser
 COPY app.py app.py
 COPY templates templates/
-CMD chmod +w /home/pythonuser/app
 CMD python -u app.py
