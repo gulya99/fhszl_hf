@@ -25,8 +25,7 @@ def home():
     if form.validate_on_submit():
         file = form.file.data
         filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        image = {"image": file.filename}
+        image = {"image": (filename, file)}
         response = requests.post('http://0.0.0.0:6000/detect', files=files)
         return "File has been uploaded."
     return render_template('index.html', form=form)
