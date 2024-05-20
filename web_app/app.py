@@ -14,7 +14,7 @@ def detect(img_path):
     cars = car_cascade.detectMultiScale(image)
     for (x, y, w, h) in cars:
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-    cv2.imwrite(img_path.split(".")[0] + "_detected.jpg")
+    cv2.imwrite(img_path.split(".")[0] + "_detected.jpg", image)
     return len(cars)
 
 @app.route("/health")
