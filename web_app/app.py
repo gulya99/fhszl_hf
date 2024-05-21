@@ -35,7 +35,8 @@ def upload():
     image.save(img_path)
     quantity = 0
     quantity, det_path = detect(img_path)
-    with open("db.csv", mode="r", newline="") as db:
+    db_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "db/db.csv")
+    with open(db_path, mode="r", newline="") as db:
         writer = csv.writer(db)
         writer.writerow([tag, quantity, img_path, det_path])
     return render_template("image.html", title=tag, image=img_path, det_image=det_path, quantity=quantity)
