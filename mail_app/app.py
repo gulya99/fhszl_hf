@@ -10,7 +10,7 @@ def health():
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("subscribe.html")
 
 @app.route('/enqueue', methods=['POST'])
 def enqueue_message():
