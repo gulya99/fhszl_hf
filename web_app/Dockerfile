@@ -7,6 +7,5 @@ WORKDIR /home/pythonuser/app
 USER pythonuser
 COPY app.py app.py
 COPY templates templates/
-COPY db db/
 COPY haarcascade_car.xml haarcascade_car.xml
 CMD python -u app.py

@@ -40,9 +40,9 @@ def upload():
     quantity = 0
     quantity, det_filename = detect(filename)
     db_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "db/db.csv")
-#    with open(db_path, mode="a", newline="") as db:
-#        writer = csv.writer(db)
-#        writer.writerow([tag, quantity, img_path, os.path.join(app.config["UPLOAD_FOLDER"], det_filename)])
+    with open(db_path, mode="a", newline="") as db:
+        writer = csv.writer(db)
+        writer.writerow([tag, quantity, img_path, os.path.join(app.config["UPLOAD_FOLDER"], det_filename)])
     return render_template("image.html", title=tag, image=filename, det_image=det_filename, quantity=quantity)
 
 if __name__ == '__main__':
