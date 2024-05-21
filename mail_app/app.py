@@ -18,7 +18,6 @@ if __name__ == '__main__':
         connection = pika.BlockingConnection(pika.ConnectionParameters(host="rabbitmq"))
     except pika.exceptions.AMQPConnectionError as exc:
         app.logger.info("Failed to connect to RabbitMQ service. Message wont be sent.")
-        return "NOT OK"
 
     channel = connection.channel()
     channel.queue_declare(queue='task_queue', durable=True)
