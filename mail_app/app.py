@@ -4,6 +4,10 @@ import redis
 app = Flask(__name__)
 redis_client = redis.StrictRedis(host='localhost', port=6379, db=0)
 
+@app.route("/health")
+def health():
+    return "OK"
+
 @app.route('/enqueue', methods=['POST'])
 def enqueue_message():
     message = request.form.get('message')
