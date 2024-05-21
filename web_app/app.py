@@ -3,6 +3,7 @@ import os
 import cv2
 import csv
 import time
+import base64
 import requests
 import threading
 
@@ -42,7 +43,8 @@ def upload():
 #    with open(db_path, mode="a", newline="") as db:
 #        writer = csv.writer(db)
 #        writer.writerow([tag, quantity, img_path, os.path.join(app.config["UPLOAD_FOLDER"], det_filename)])
-    return render_template("image.html", title=tag, image=filename, det_image=det_filename, quantity=quantity)
+    image_data = base64.b64encode(image).decode("utf-8")
+    return render_template("image.html", title=tag, image=image_data, det_image=det_filename, quantity=quantity)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
