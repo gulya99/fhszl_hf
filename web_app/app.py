@@ -3,6 +3,7 @@ import os
 import cv2
 import csv
 import time
+import pika
 import base64
 import requests
 import threading
@@ -43,6 +44,25 @@ def upload():
     with open(db_path, mode="a", newline="") as db:
         writer = csv.writer(db)
         writer.writerow([tag, quantity, img_path, os.path.join(app.config["UPLOAD_FOLDER"], det_filename)])
+
+    try:
+        connection = pika.BlockingConnection(pika.ConnectionParameters(host="rabbitmq"))
+    except pika.exceptions.AMQPConnectionError as exc:
+        print("Failed to connect to RabbitMQ service. Message wont be sent.")
+        return
+
+    channel = connection.channel()
+    channel.queue_declare(queue='task_queue', durable=True)
+    channel.basic_publish(
+        exchange='',
+        routing_key='task_queue',
+        body="new_photo",
+        properties=pika.BasicProperties(
+            delivery_mode=2,  # make message persistent
+        ))
+   
+    connection.close()
+    
     return render_template("image.html", title=tag, image=filename, det_image=det_filename, quantity=quantity)
 
 if __name__ == '__main__':

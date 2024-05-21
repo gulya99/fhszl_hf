@@ -1,31 +1,33 @@
 from flask import Flask
-from flask_mail import Mail, Message
+import pika
 
 app = Flask(__name__)
 
-app.config['MAIL_SERVER']='bulk.smtp.mailtrap.io'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USERNAME'] = 'gulyi.geri@gmail.com'
-app.config['MAIL_PASSWORD'] = 'c66fd364d82023c0747ad61ee7c4920d'
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
-
-mail = Mail(app)
 
 @app.route("/health")
 def health():
     return "OK"
 
 @app.route("/")
-def index():
-    msg = Message(
-        subject='Hello from the other side!', 
-        sender='peter@mailtrap.io',
-        recipients=['gulyi.geri@gmail.com']
-    )
-    msg.body = "Hey, sending you this email from my Flask app, let me know if it works."
-    mail.send(msg)
-    return "Message sent!"
+def recive():
+    try:
+        connection = pika.BlockingConnection(pika.ConnectionParameters(host="rabbitmq"))
+    except pika.exceptions.AMQPConnectionError as exc:
+        print("Failed to connect to RabbitMQ service. Message wont be sent.")
+        return
+
+    channel = connection.channel()
+    channel.queue_declare(queue='task_queue', durable=True)
+
+    def callback(ch, method, properties, body):
+        print(" Received %s" % body.decode())
+        print(" Done")
+
+        ch.basic_ack(delivery_tag=method.delivery_tag)
+
+    channel.basic_qos(prefetch_count=1)
+    channel.basic_consume(queue='task_queue', on_message_callback=callback)
+    channel.start_consuming()
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=6000, debug=True)
