@@ -9,7 +9,6 @@ app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 def callback(ch, method, properties, body):
-    # Wjem a ,essage os receoved, emit it to the WebSocket
     socketio.emit('message', {'data': body.decode()})
 
 def start_consuming():
@@ -21,6 +20,7 @@ def start_consuming():
 
             def callback(ch, method, properties, body):
                 socketio.emit('message', {'data': body.decode()})
+                app.logger.info(body.decode())
 
             channel.basic_consume(queue='task_queue', on_message_callback=callback, auto_ack=True)
             channel.start_consuming()
