@@ -46,18 +46,17 @@ def upload():
         writer.writerow([tag, quantity, img_path, os.path.join(app.config["UPLOAD_FOLDER"], det_filename)])
 
     try:
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host="rabbitmq"))
+        connection = pika.BlockingConnection(pika.ConnectionParameters("0.0.0.0"))
     except pika.exceptions.AMQPConnectionError as exc:
         print("Failed to connect to RabbitMQ service. Message wont be sent.")
-        return
 
     channel = connection.channel()
-    channel.queue_declare(queue='car_detector')
+    channel.queue_declare(queue='task_queue')
         
     with open(db_path, mode='r', newline="") as db:
         file_content = db.read()
 
-    channel.basic_publish(exchange='', routing_key='car_detector', body=file_content)
+    channel.basic_publish(exchange='', routing_key='task_queue', body=file_content)
     connection.close()
     
     return render_template("image.html", title=tag, image=filename, det_image=det_filename, quantity=quantity)

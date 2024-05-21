@@ -14,18 +14,19 @@ def callback(ch, method, properties, body):
 def start_consuming():
     while True:
         try:
-            connection = pika.BlockingConnection(pika.ConnectionParameters(host="rabbitmq"))
+            connection = pika.BlockingConnection(pika.ConnectionParameters("0.0.0.0"))
             channel = connection.channel()
-            channel.queue_declare(queue='task_queue', durable=True)
+            channel.queue_declare(queue='task_queue')
 
             def callback(ch, method, properties, body):
                 socketio.emit('message', {'data': body.decode()})
 
-            channel.basic_consume(queue='task_queue', on_message_callback=callback)
+            channel.basic_consume(queue='task_queue', on_message_callback=callback, auto_ack=True)
             channel.start_consuming()
             break
         except pika.exceptions.AMQPConnectionError as exc:
-            app.logger.info("Failed to connect to RabbitMQ service. Message wont be sent.")
+            app.logger.info("Failed to connect to RabbitMQ.")
+            time.sleep(5)
 
 threading.Thread(target=start_consuming).start()
 
