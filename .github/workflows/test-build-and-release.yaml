@@ -40,13 +40,6 @@ jobs:
         run: cd ./redis && docker build -t gulya99/fhszl-hf:redis-${{ github.sha }} .
       - name: Push Docker image redis
         run: docker push gulya99/fhszl-hf:redis-${{ github.sha }}
-      - name: asd
-        run: docker run --restart always --name mail \
-              -e RELAY_HOST=smtp.fhszlhf.com \
-              -e RELAY_PORT=587 \
-              -e RELAY_USERNAME=eh9jtc@fhszlhf.com \
-              -e RELAY_PASSWORD=secretpassword \
-              -d bytemark/smtp
       - name: Update values.yaml
         run: |
           cd helm
