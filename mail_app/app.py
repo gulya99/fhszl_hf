@@ -10,6 +10,7 @@ def health():
 
 @app.route("/")
 def recive():
+    return "OK"
     
 
 if __name__ == '__main__':
