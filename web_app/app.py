@@ -7,7 +7,7 @@ import requests
 import threading
 
 app = Flask(__name__)
-app.config["UPLOAD_FOLDER"] = os.path.join(os.path.dirname(os.path.realpath(__file__)), "images")
+app.config["UPLOAD_FOLDER"] = os.path.join(os.path.dirname(os.path.realpath(__file__)), "static")
 
 def detect(filename):
     img_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
