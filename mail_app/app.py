@@ -1,33 +1,30 @@
-from flask import Flask, render_template, request
-import redis
+from flask import Flask
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
-redis_client = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USERNAME'] = 'gulyi.geri@gmail.com'  # Use your actual Gmail address
+app.config['MAIL_PASSWORD'] = 'Nagysztgergely'     # Use your generated App Password
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+mail = Mail(app)
 
 @app.route("/health")
 def health():
     return "OK"
 
 @app.route("/")
-def home():
-    return render_template("subscribe.html")
-
-@app.route('/enqueue', methods=['POST'])
-def enqueue_message():
-    message = request.form.get('message')
-    if message:
-        redis_client.rpush('messages', message)
-        return 'Message enqueued successfully'
-    else:
-        return 'No message provided'
-
-"""@app.route('/dequeue')
-def dequeue_message():
-    message = redis_client.lpop('messages')
-    if message:
-        return f'Dequeued message: {message.decode("utf-8")}'
-    else:
-        return 'No messages in the queue'"""
+def index():
+    msg = Message(
+        subject='Hello from the other side!', 
+        sender='gulyi.geri@gmail.com',  # Ensure this matches MAIL_USERNAME
+        recipients=['gugerobo@gmail.com']  # Replace with actual recipient's email
+    )
+    msg.body = "Hey, sending you this email from my Flask app, let me know if it works."
+    mail.send(msg)
+    return "Message sent!"
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=6000, debug=True)
+    app.run(debug=True)

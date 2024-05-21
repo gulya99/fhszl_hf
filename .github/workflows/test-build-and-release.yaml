@@ -36,10 +36,10 @@ jobs:
         run: cd ./mail_app && docker build -t gulya99/fhszl-hf:mail-app-${{ github.sha }} .
       - name: Push Docker image mail-app
         run: docker push gulya99/fhszl-hf:mail-app-${{ github.sha }}
-      - name: Build Docker image redis
-        run: cd ./redis && docker build -t gulya99/fhszl-hf:redis-${{ github.sha }} .
-      - name: Push Docker image redis
-        run: docker push gulya99/fhszl-hf:redis-${{ github.sha }}
+      - name: Build Docker image rabbitmq
+        run: cd ./rabbitmq && docker build -t gulya99/fhszl-hf:rabbitmq-${{ github.sha }} .
+      - name: Push Docker image rabbitmq
+        run: docker push gulya99/fhszl-hf:rabbitmq-${{ github.sha }}
       - name: Update values.yaml
         run: |
           cd helm

@@ -20,7 +20,7 @@ spec:
   type: NodePort
   ports:
     - port: 6000
-      targetPort: http
+      targetPort: 6000
       protocol: TCP
       name: mail-app
   selector:
@@ -29,13 +29,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis
+  name: rabbitmq
 spec:
-  type: Service
+  type: ClusterIP
   ports:
-    - port: 6379
-      targetPort: 6379
+    - port: 5672
+      targetPort: 5672
       protocol: TCP
-      name: redis
+      name: rabbitmq
   selector:
-    app: redis
+    app: rabbitmq
