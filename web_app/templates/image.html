@@ -8,12 +8,12 @@
 </head>
 <body>
     <h4>Original picture</h4>
-    <img src="data:image/jpeg;base64,{{ image }}" alt="Original picture">
+    <img src="get_url({{ image }})" alt="Original picture">
     <br>
     <br>
     <br>
     <h4>Detected picture</h4>
-    <img src="data:image/jpeg;base64,{{ det_image }}" alt="Detected picture">
+    <img src="get_url({{ det_image }})" alt="Detected picture">
     <p><b>{{ quantity }}</b></p>
     <br>
     <p>{{ tag }}</p>

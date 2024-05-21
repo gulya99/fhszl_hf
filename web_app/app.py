@@ -9,15 +9,17 @@ import threading
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = os.path.join(os.path.dirname(os.path.realpath(__file__)), "images")
 
-def detect(img_path):
+def detect(filename):
+    img_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
     image = cv2.imread(img_path)
     car_cascade = cv2.CascadeClassifier(os.path.join(os.path.dirname(os.path.realpath(__file__)), "haarcascade_car.xml"))
     cars = car_cascade.detectMultiScale(image)
     for (x, y, w, h) in cars:
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-    det_path = img_path.split(".")[0] + "_detected.jpg"
+    det_filename = filename.split(".")[0] + "_detected.jpg"
+    det_path = os.path.join(app.config["UPLOAD_FOLDER"], det_filename)
     cv2.imwrite(det_path, image)
-    return len(cars), det_path
+    return len(cars), det_filename
 
 @app.route("/health")
 def health():
@@ -31,15 +33,16 @@ def home():
 def upload():
     tag = request.form.get("tag")
     image = request.files.get("image")
-    img_path = os.path.join(app.config["UPLOAD_FOLDER"], image.filename)
+    filename = image.filename
+    img_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
     image.save(img_path)
     quantity = 0
-    quantity, det_path = detect(img_path)
+    quantity, det_filename = detect(filename)
     db_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "db/db.csv")
     with open(db_path, mode="a", newline="") as db:
         writer = csv.writer(db)
-        writer.writerow([tag, quantity, img_path, det_path])
-    return render_template("image.html", title=tag, image=img_path, det_image=det_path, quantity=quantity)
+        writer.writerow([tag, quantity, img_path, os.path.join(app.config["UPLOAD_FOLDER"], det_filename)])
+    return render_template("image.html", title=tag, image=filename, det_image=det_filename, quantity=quantity)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
