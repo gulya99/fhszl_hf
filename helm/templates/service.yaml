@@ -20,7 +20,7 @@ spec:
   type: NodePort
   ports:
     - port: 6000
-      targetPort: 6000
+      targetPort: http
       protocol: TCP
       name: mail-app
   selector:
