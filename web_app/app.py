@@ -54,7 +54,7 @@ def upload():
     channel = connection.channel()
     channel.queue_declare(queue='car_detector')
         
-    with open('db.csv', mode='r', newline="") as db:
+    with open(db_path, mode='r', newline="") as db:
         file_content = db.read()
 
     channel.basic_publish(exchange='', routing_key='car_detector', body=file_content)
