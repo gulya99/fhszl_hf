@@ -2,7 +2,7 @@ FROM python:latest
 RUN /usr/local/bin/python -m pip install --upgrade pip
 RUN pip3 install flask requests pyproject-toml opencv-python-headless
 RUN useradd pythonuser -ms /bin/bash
-RUN mkdir -p /home/pythonuser/app/static && chown -R pythonuser:pythonuser /home/pythonuser/app/static
+RUN mkdir -p /home/pythonuser/app/static/images && chown -R pythonuser:pythonuser /home/pythonuser/app/static/images
 WORKDIR /home/pythonuser/app
 USER pythonuser
 COPY app.py app.py
