@@ -10,6 +10,9 @@ def health():
 
 @app.route("/")
 def recive():
+    
+
+if __name__ == '__main__':
     try:
         connection = pika.BlockingConnection(pika.ConnectionParameters(host="rabbitmq"))
     except pika.exceptions.AMQPConnectionError as exc:
@@ -30,6 +33,4 @@ def recive():
     channel.basic_qos(prefetch_count=1)
     channel.basic_consume(queue='task_queue', on_message_callback=callback)
     channel.start_consuming()
-
-if __name__ == '__main__':
     app.run(host="0.0.0.0", port=6000, debug=True)
