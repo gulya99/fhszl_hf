@@ -13,17 +13,19 @@ def recive():
     try:
         connection = pika.BlockingConnection(pika.ConnectionParameters(host="rabbitmq"))
     except pika.exceptions.AMQPConnectionError as exc:
-        print("Failed to connect to RabbitMQ service. Message wont be sent.")
-        return
+        app.logging.info("Failed to connect to RabbitMQ service. Message wont be sent.")
+        return "NOT OK"
 
     channel = connection.channel()
     channel.queue_declare(queue='task_queue', durable=True)
 
     def callback(ch, method, properties, body):
-        print(" Received %s" % body.decode())
-        print(" Done")
+        app.logging.info(" Received %s" % body.decode())
+        app.logging.info(" Done")
 
         ch.basic_ack(delivery_tag=method.delivery_tag)
+
+    app.logging.info("Start consuming")
 
     channel.basic_qos(prefetch_count=1)
     channel.basic_consume(queue='task_queue', on_message_callback=callback)
