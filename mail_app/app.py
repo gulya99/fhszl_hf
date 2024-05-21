@@ -33,4 +33,4 @@ if __name__ == '__main__':
     channel.basic_qos(prefetch_count=1)
     channel.basic_consume(queue='task_queue', on_message_callback=callback)
     channel.start_consuming()
-    app.run(host="0.0.0.0", port=6000, debug=True)
+#    app.run(host="0.0.0.0", port=6000, debug=True)
