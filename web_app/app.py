@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import os
 import cv2
+import csv
 import time
 import requests
 import threading
@@ -34,6 +35,9 @@ def upload():
     image.save(img_path)
     quantity = 0
     quantity, det_path = detect(img_path)
+    with open("db.csv", mode="r", newline="") as db:
+        writer = csv.writer(db)
+        writer.writerow([tag, quantity, img_path, det_path])
     return render_template("image.html", title=tag, image=img_path, det_image=det_path, quantity=quantity)
 
 if __name__ == '__main__':
