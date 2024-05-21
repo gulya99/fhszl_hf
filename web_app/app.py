@@ -46,7 +46,7 @@ def upload():
         writer.writerow([tag, quantity, img_path, os.path.join(app.config["UPLOAD_FOLDER"], det_filename)])
 
     try:
-        connection = pika.BlockingConnection(pika.ConnectionParameters("0.0.0.0"))
+        connection = pika.BlockingConnection(pika.ConnectionParameters(host="rabbitmq"))
     except pika.exceptions.AMQPConnectionError as exc:
         print("Failed to connect to RabbitMQ service. Message wont be sent.")
 
