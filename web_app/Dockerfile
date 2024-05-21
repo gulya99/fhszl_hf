@@ -8,6 +8,5 @@ USER pythonuser
 COPY app.py app.py
 COPY templates templates/
 COPY db db/
-RUN chown -R pythonuser:pythonuser /home/pythonuser/app/db
 COPY haarcascade_car.xml haarcascade_car.xml
 CMD python -u app.py
